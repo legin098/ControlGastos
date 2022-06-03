@@ -8,6 +8,7 @@ export const Modal = ({
   setAnimarModal,
   guardarGasto,
   gastoEditar,
+  setGastoEditar,
 }) => {
   const [mensaje, setMensaje] = useState("");
   const [nombre, setNombre] = useState("");
@@ -17,7 +18,7 @@ export const Modal = ({
   const [id, setId] = useState("");
 
   useEffect(() => {
-    if(Object.keys(gastoEditar).length > 0){
+    if (Object.keys(gastoEditar).length > 0) {
       setNombre(gastoEditar.nombre);
       setCantidad(gastoEditar.cantidad);
       setCategoria(gastoEditar.categoria);
@@ -28,6 +29,7 @@ export const Modal = ({
 
   const ocultarModal = () => {
     setAnimarModal(false);
+    setGastoEditar({});
 
     setTimeout(() => {
       setModal(false);
@@ -98,7 +100,10 @@ export const Modal = ({
             <option value="suscripciones">Suscripciones</option>
           </select>
         </div>
-        <input type="submit" value={gastoEditar.nombre ? "Guardar Cambios" : "Agregar gasto"} />
+        <input
+          type="submit"
+          value={gastoEditar.nombre ? "Guardar Cambios" : "Agregar gasto"}
+        />
       </form>
     </div>
   );

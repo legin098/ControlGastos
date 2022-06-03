@@ -27,22 +27,20 @@ const diccionarioIconos = {
   suscripciones: IconoSuscripciones,
 };
 
-export const Gasto = ({ gasto, setGastoEditar }) => {
+export const Gasto = ({ gasto, setGastoEditar, eliminarGasto }) => {
   const leadingActions = () => (
     <LeadingActions>
-      <SwipeAction onClick={() => setGastoEditar(gasto)}>
-        Editar
-      </SwipeAction>
+      <SwipeAction onClick={() => setGastoEditar(gasto)}>Editar</SwipeAction>
     </LeadingActions>
-  )
+  );
 
   const trailingActions = () => (
     <TrailingActions>
-      <SwipeAction onClick={() => console.log("eliminar...")}>
+      <SwipeAction destructive={true} onClick={() => eliminarGasto(gasto.id)}>
         Eliminar
       </SwipeAction>
     </TrailingActions>
-  )
+  );
 
   return (
     <SwipeableList>
