@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CerrarBtn from "../img/cerrar.svg";
 import { Mensaje } from "./Mensaje";
 
@@ -7,11 +7,24 @@ export const Modal = ({
   animarModal,
   setAnimarModal,
   guardarGasto,
+  gastoEditar,
 }) => {
   const [mensaje, setMensaje] = useState("");
   const [nombre, setNombre] = useState("");
   const [cantidad, setCantidad] = useState("");
   const [categoria, setCategoria] = useState("");
+  const [fecha, setFecha] = useState("");
+  const [id, setId] = useState("");
+
+  useEffect(() => {
+    if(Object.keys(gastoEditar).length > 0){
+      setNombre(gastoEditar.nombre);
+      setCantidad(gastoEditar.cantidad);
+      setCategoria(gastoEditar.categoria);
+      setFecha(gastoEditar.fecha);
+      setId(gastoEditar.id);
+    }
+  }, []);
 
   const ocultarModal = () => {
     setAnimarModal(false);
@@ -33,7 +46,7 @@ export const Modal = ({
       return;
     }
 
-    guardarGasto({ nombre, cantidad, categoria });
+    guardarGasto({ nombre, cantidad, categoria, id, fecha });
   };
 
   return (
@@ -45,7 +58,7 @@ export const Modal = ({
         className={`formulario ${animarModal ? "animar" : "cerrar"}`}
         onSubmit={handleSubmit}
       >
-        <legend>Nuevo gasto</legend>
+        <legend>{gastoEditar.nombre ? "Editar Gasto" : "Nuevo gasto"}</legend>
         {mensaje && <Mensaje tipo="error">{mensaje}</Mensaje>}
 
         <div className="campo">
@@ -85,7 +98,7 @@ export const Modal = ({
             <option value="suscripciones">Suscripciones</option>
           </select>
         </div>
-        <input type="submit" value="Agregar Gasto" />
+        <input type="submit" value={gastoEditar.nombre ? "Guardar Cambios" : "Agregar gasto"} />
       </form>
     </div>
   );
